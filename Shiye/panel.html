@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>拾页 · 漫画图片下载器</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+<header class="mast">
+  <img src="icons/48.png" width="38" height="38" alt="">
+  <div><h1>拾页</h1><div class="wordmark" lang="en">PAGE COLLECTOR</div></div>
+  <span class="version">1.1</span>
+</header>
+<main>
+  <section aria-labelledby="capture-head">
+    <div class="heading"><span class="step">01</span><h2 id="capture-head">收集漫画页</h2></div>
+    <div class="source" id="source">在漫画章节页点工具栏中的「拾页」。</div>
+    <button class="primary full" id="scan">扫描 / 追加当前页</button>
+    <div class="two capture"><button id="scroll">滚动收集</button><button id="turn">自动翻页</button></div>
+    <details class="help"><summary>选择收集方式</summary>
+      <p><b>上下滚动的章节</b>　用「滚动收集」从顶部扫描到底部，结束后会回到原位置。</p>
+      <p><b>一页一翻的章节</b>　从第一页开始，设置停止页数，再点「自动翻页」。遇到特殊按钮，可手动翻到下一页，再点「扫描 / 追加当前页」。</p>
+      <label class="limit">自动翻页最多收集 <input id="limit" type="number" min="1" max="500" value="100"> 个阅读器页面（含当前页）</label>
+    </details>
+  </section>
+  <div class="statusbar" role="status" aria-live="polite"><span id="light"></span><span id="status">等待扫描</span><button id="stop" class="textbtn" hidden>停止</button></div>
+  <section aria-labelledby="pages-head">
+    <div class="heading"><span class="step">02</span><h2 id="pages-head">核对页序</h2><span id="count" class="count">已选 0 张</span></div>
+    <div class="tools"><button id="select" class="textbtn">全选</button><button id="none" class="textbtn">全不选</button><button id="other" class="textbtn" hidden>其他图片</button><button id="clear" class="textbtn trailing">清空</button></div>
+    <div class="blank" id="blank"><b>这里会显示收集到的图片</b><span>按阅读顺序排列，可取消勾选封面、广告或重复页。</span></div>
+    <ol id="list" aria-label="收集到的图片列表"></ol>
+    <div id="extra"></div>
+    <details class="help"><summary>手动合并一页的分块</summary>
+      <p>只勾选同一页的分块，先用 ↑↓ 排好顺序，再合并。可用于没有自动识别出页面边界的网站。</p>
+      <div class="two"><select id="join-direction" aria-label="合并方向"><option value="vertical">从上到下</option><option value="horizontal">从左到右</option></select><button id="join" disabled>合并选中图片为一页</button></div>
+      <button id="unjoin" class="textbtn" hidden>撤销上次合并</button>
+    </details>
+  </section>
+  <section class="output" aria-labelledby="export-head">
+    <div class="heading"><span class="step">03</span><h2 id="export-head">导出图片</h2></div>
+    <label for="title">章节名称</label><input type="text" id="title" maxlength="100" placeholder="用作文件夹或压缩包名称">
+    <div class="two fields">
+      <div><label for="format">图片格式</label><select id="format"><option value="png">PNG</option><option value="jpg">JPG</option></select></div>
+      <div><label for="delivery">保存方式</label><select id="delivery"><option value="zip">ZIP 压缩包</option><option value="files">逐张保存</option></select></div>
+    </div>
+    <div class="hint" id="formathint">PNG 保留透明背景。同格式的原图直接保存。</div>
+    <button id="export" class="primary full" disabled>导出所选图片</button>
+    <progress id="progress" value="0" max="100" hidden></progress>
+    <div id="report" aria-live="polite"></div>
+    <button id="retry" class="full" hidden>仅重试失败页</button>
+  </section>
+</main>
+<dialog id="viewer" aria-labelledby="viewtitle">
+  <div class="viewbar"><b id="viewtitle">页面预览</b><button id="closeview" class="textbtn">关闭</button></div>
+  <img id="viewimage" alt="所选漫画页的预览"><p id="viewnote"></p>
+</dialog>
+<footer>图片在本机处理 · 关闭漫画标签页会清除本章列表</footer>
+<script src="vendor/jszip.min.js"></script><script src="db.js"></script><script src="layout.js"></script><script src="export.js"></script><script src="panel.js"></script>
+</body>
+</html>
