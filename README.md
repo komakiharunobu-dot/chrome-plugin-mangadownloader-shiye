@@ -1,4 +1,4 @@
-拾页 · Shiye
+# 拾页 · Shiye
 
 漫画图片收集与下载工具 / Manga Image Collector & Downloader
 
